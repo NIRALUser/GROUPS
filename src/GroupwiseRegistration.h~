@@ -16,7 +16,7 @@
 #include <vector>
 #include <map>
 #include "Mesh.h"
-#include "AABB_Sphere.h"
+#include "AABB.h"
 
 using namespace std;
 
@@ -74,7 +74,7 @@ private:
 		float **coeff_prev_step;
 		float pole[3];
 		vector<point *> vertex;
-		AABB_Sphere *tree;
+		AABB *tree;
 		Mesh *sphere;
 		Mesh *surf;
 		float *property;
