@@ -37,6 +37,17 @@ find_package(Git REQUIRED)
 mark_as_superbuild(GIT_EXECUTABLE)
 
 #-----------------------------------------------------------------------------
+# Options
+option(${EXTENSION_NAME}_BUILD_CLI_MODULE_Groups "Build Groups CLI module" ON)
+mark_as_superbuild(${EXTENSION_NAME}_BUILD_CLI_MODULE_Groups)
+
+option(${EXTENSION_NAME}_BUILD_SCRIPTED_MODULE_RigidAlignmentModule "Build RigidAlignmentModule scripted module" ON)
+mark_as_superbuild(${EXTENSION_NAME}_BUILD_SCRIPTED_MODULE_RigidAlignmentModule)
+
+option(${EXTENSION_NAME}_BUILD_SCRIPTED_MODULE_GroupWiseRegistrationModule "Build GroupWiseRegistrationModule scripted module" ON)
+mark_as_superbuild(${EXTENSION_NAME}_BUILD_SCRIPTED_MODULE_GroupWiseRegistrationModule)
+
+#-----------------------------------------------------------------------------
 # SuperBuild setup
 option(${EXTENSION_NAME}_SUPERBUILD "Build ${EXTENSION_NAME} and the projects it depends on." ON)
 mark_as_advanced(${EXTENSION_NAME}_SUPERBUILD)
