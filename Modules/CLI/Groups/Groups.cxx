@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
             
             mapProperty[propertyname] = weight;
         }
-    }catch(exception e){
+    }catch(exception &e){
         cerr<<e.what()<<endl;
         return EXIT_FAILURE;
     }
@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
         // delete [] coeff;
         // delete [] surf;
         // delete [] weight;    
-    }catch(exception e){
+    }catch(exception &e){
         cerr<<e.what()<<endl;
         return EXIT_FAILURE;
     }
