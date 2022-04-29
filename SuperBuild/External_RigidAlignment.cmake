@@ -34,7 +34,7 @@ if(NOT DEFINED ${proj}_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG
-    "07e6049bc3ddcc75e35130602c6f34b494566e33" # master 2021-05-26
+    "a37cbff5996071f971b41d1ce4e2cb7bbe1d6938" # master 2022-04-29
     QUIET
     )
 
