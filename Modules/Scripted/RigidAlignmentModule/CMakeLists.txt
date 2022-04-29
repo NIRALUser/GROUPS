@@ -20,7 +20,6 @@ configure_file(
 slicerMacroBuildScriptedModule(
   NAME ${MODULE_NAME}Metadata
   SCRIPTS ${MODULE_METADATA_SCRIPT}
-  WITH_SUBDIR
   )
 
 #-----------------------------------------------------------------------------
