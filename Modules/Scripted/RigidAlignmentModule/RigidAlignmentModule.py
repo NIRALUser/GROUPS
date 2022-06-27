@@ -25,7 +25,7 @@ class RigidAlignmentModule(ScriptedLoadableModule):
   def __init__(self, parent):
     ScriptedLoadableModule.__init__(self, parent)
 
-    from RigidAlignmentModuleMetadata import TITLE, CATEGORY
+    from _RigidAlignmentModuleMetadata import TITLE, CATEGORY
 
     self.parent.title = TITLE
     self.parent.categories = [CATEGORY]
