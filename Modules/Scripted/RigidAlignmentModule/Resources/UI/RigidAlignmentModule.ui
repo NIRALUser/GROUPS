@@ -62,7 +62,7 @@
          <item row="1" column="1">
           <widget class="ctkDirectoryButton" name="InputDirectory">
            <property name="toolTip">
-            <string>The input directory should contain the time-regressed shapes computed by RegressionComputation.gt;</string>
+            <string>Directory containing the input surfaces</string>
            </property>
           </widget>
          </item>
@@ -75,7 +75,11 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="ctkDirectoryButton" name="FiducialsDirectory"/>
+          <widget class="ctkDirectoryButton" name="FiducialsDirectory">
+          <property name="toolTip">
+            <string>Directory containing the input landmarks</string>
+           </property>
+          </widget>
          </item>
 
          <item row="3" column="0">
@@ -86,7 +90,11 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="ctkDirectoryButton" name="CommonSphereDirectory"/>
+          <widget class="ctkDirectoryButton" name="CommonSphereDirectory">
+          <property name="toolTip">
+            <string>Directory containing the unit sphere template</string>
+           </property>
+          </widget>
          </item>
 
          <item row="4" column="0">
@@ -97,7 +105,11 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="ctkDirectoryButton" name="OutputDirectory"/>
+          <widget class="ctkDirectoryButton" name="OutputDirectory">
+          <property name="toolTip">
+            <string>Directory to store output models</string>
+           </property>
+          </widget>
          </item>
 
          <item row="5" column="0">
@@ -108,7 +120,11 @@
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="ctkDirectoryButton" name="OutputSphereDirectory"/>
+          <widget class="ctkDirectoryButton" name="OutputSphereDirectory">
+          <property name="toolTip">
+            <string>Directory to store output spheres</string>
+          </property>
+          </widget>
          </item>
         </layout>
        </widget>
