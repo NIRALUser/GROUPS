@@ -10,41 +10,44 @@
  *  Ilwoo Lyu, ilwoolyu@cs.unc.edu
  *************************************************/
 
+// STD includes
 #include <cstdlib>
+#include <iostream>
 #include <vector>
 #include <string>
 
-#ifdef WIN32
-#include "dirent.h"
-#else
-#include <dirent.h>
-#endif
+// VTK includes
+#include <vtksys/Directory.hxx>
+#include <vtksys/SystemTools.hxx>
+
 #include "GroupsCLP.h"
 #include "GroupwiseRegistration.h"
-#include <iostream>
 
 bool getListFile(string path, vector<string> &list, const string &suffix)
 {
-
-    DIR *dir = opendir(path.c_str());
-    if (dir != NULL)
+  vtksys::Directory dir;
+  std::string errorMessage = "";
+  dir.Load(path.c_str(), &errorMessage);
+  if (errorMessage != "")
+  {
+    cerr << "Failed to list directory " << path << ": " << errorMessage << endl;
+    return false;
+  }
+  for (unsigned long fileNum=0; fileNum < dir.GetNumberOfFiles(); ++fileNum)
+  {
+    std::string filename = std::string(dir.GetFile(fileNum));
+    std::string filepath = path + "/" + filename;
+    if (vtksys::SystemTools::FileIsDirectory(filepath))
     {
-        while (dirent *entry = readdir(dir))
-        {
-            string filename = entry->d_name;
-            if(filename.find(suffix) != string::npos && filename.find_last_of(suffix) == filename.size() - 1)
-            {
-                list.push_back(path + "/" + filename);
-            }
-        }
-        closedir(dir);
-        sort(list.begin(), list.begin() + list.size());
-        return true;
-    }else{
-        
-        cerr<<"The directory does not exist! "<<path<<endl;
-        return false;
+      continue;
     }
+    if(filename.find(suffix) != string::npos && filename.find_last_of(suffix) == filename.size() - 1)
+    {
+      list.push_back(filepath);
+    }
+  }
+  sort(list.begin(), list.begin() + list.size());
+  return true;
 }
 
 void getTrimmedList(vector<string> &list, const vector<string> &name)
@@ -97,9 +100,9 @@ int main(int argc, char *argv[])
         cout<<"Setting dirOutput to ./"<<endl;
         dirOutput = "./";
     }else{
-        if (opendir(dirOutput.c_str()) == NULL)
+        if(!vtksys::SystemTools::FileExists(dirOutput) || !vtksys::SystemTools::FileIsDirectory(dirOutput))
         {
-            cout<<"The output directory does not exist! "<<dirOutput<<endl;
+            cerr << "The output directory does not exist! " << dirOutput <<endl;
             return EXIT_FAILURE;
         }
     }
