@@ -50,7 +50,7 @@ bool getListFile(string path, vector<string> &list, const string &suffix)
       list.push_back(filepath);
     }
   }
-  sort(list.begin(), list.begin() + list.size());
+  sort(list.begin(), list.end());
   return true;
 }
 
