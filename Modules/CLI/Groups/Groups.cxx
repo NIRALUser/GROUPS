@@ -23,6 +23,10 @@
 #include "GroupsCLP.h"
 #include "GroupwiseRegistration.h"
 
+bool endsWith(const string& value, const string& suffix) {
+  return value.size() >= suffix.size() && 0 == value.compare(value.size() - suffix.size(), suffix.size(), suffix);
+}
+
 bool getListFile(string path, vector<string> &list, const string &suffix)
 {
   vtksys::Directory dir;
@@ -41,7 +45,7 @@ bool getListFile(string path, vector<string> &list, const string &suffix)
     {
       continue;
     }
-    if(filename.find(suffix) != string::npos && filename.find_last_of(suffix) == filename.size() - 1)
+    if(endsWith(filename, suffix))
     {
       list.push_back(filepath);
     }
