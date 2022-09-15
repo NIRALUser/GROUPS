@@ -141,7 +141,7 @@ class RigidAlignmentModuleLogic(ScriptedLoadableModuleLogic):
 
     temp = pathlib.Path(slicer.util.tempDirectory(key='RigidAlignment'))
 
-    now = datetime.datetime.now().isoformat()
+    now = datetime.datetime.now().isoformat().replace(':', '-')
     inputCSV = temp / '{}.csv'.format(now)
 
     with inputCSV.open('w', newline='') as f:
@@ -176,7 +176,9 @@ class RigidAlignmentModuleLogic(ScriptedLoadableModuleLogic):
     }
 
     logging.info('Launching RigidAlignment Module.')
-    slicer.cli.run(slicer.modules.rigidalignment, None, args, wait_for_completion=True)
+    cliNode = slicer.cli.run(slicer.modules.rigidalignment, None, args, wait_for_completion=True)
+    if cliNode.GetStatus() & cliNode.ErrorsMask:
+      raise Exception('Error running RigidAlignment, check error log for details')
     logging.info('RigidAlignment Completed.')
 
   def runSurfRemesh(self, sphere, model, unitSphere, outModel):
