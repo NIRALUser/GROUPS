@@ -3,7 +3,7 @@ set(proj MeshLib)
 
 # Set dependency list
 set(${proj}_DEPENDS
-  ""
+  VTK
   )
 
 # Include dependent projects if any
@@ -22,13 +22,13 @@ if(NOT DEFINED ${proj}_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_REPOSITORY
-    "${EP_GIT_PROTOCOL}://github.com/jcfr/MeshLib.git"
+    "${EP_GIT_PROTOCOL}://github.com/slicersalt/MeshLib.git"
     QUIET
     )
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG
-    "a63a13a19018cf331942c1192ef2ebf9b37b2020" # slicersalt-0.0.0-2017-12-11-9eb4d15ce
+    "d66f3e76dc97d2f50c3ba48a9d7cb14671c51bb1" # slicersalt-2017-12-11-9eb4d15ce
     QUIET
     )
 
@@ -57,6 +57,7 @@ if(NOT DEFINED ${proj}_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       # Install directories
       -DMeshLib_INSTALL_RUNTIME_DIR:STRING=${Slicer_INSTALL_THIRDPARTY_LIB_DIR}
       -DMeshLib_INSTALL_LIBRARY_DIR:STRING=${Slicer_INSTALL_THIRDPARTY_LIB_DIR}
+      -DVTK_DIR:PATH=${VTK_DIR}
       # Options
       -DBUILD_EXAMPLES:BOOL=OFF
       -DBUILD_TESTING:BOOL=OFF
