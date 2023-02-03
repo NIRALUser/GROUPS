@@ -110,8 +110,7 @@ private:
 	float *m_feature;
 	float *m_feature_weight;
 	float *m_eig;
-	float *m_work;	// for lapack eigenvalue computation
-	
+
 	// tic
 	int nIter;
 

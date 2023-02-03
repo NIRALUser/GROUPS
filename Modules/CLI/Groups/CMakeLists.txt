@@ -29,6 +29,7 @@ set(MODULE_TARGET_LIBRARIES
   ${LAPACKE_LIBRARIES}
   Mesh
   ${VTK_LIBRARIES}
+  VTK::eigen
   )
 
 #-----------------------------------------------------------------------------
