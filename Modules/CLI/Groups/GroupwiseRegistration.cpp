@@ -15,7 +15,6 @@
 #include <float.h>
 #include "GroupwiseRegistration.h"
 #include "SphericalHarmonics.h"
-#include <lapacke.h>
 #include "newuoa.h"
 
 #include <vtkPolyData.h>
@@ -25,6 +24,9 @@
 #include <vtkSmartPointer.h>
 #include <vtkPointData.h>
 #include <vtkPointLocator.h>
+
+#include "vtk_eigen.h"
+#include VTK_EIGEN(Dense)
 
 namespace
 {
@@ -100,7 +102,6 @@ GroupwiseRegistration::~GroupwiseRegistration(void)
 	delete [] m_eig;
 	delete [] m_feature;
 	delete [] m_updated;
-	delete [] m_work;
 	delete [] m_coeff;
 	delete [] m_coeff_prev_step;
 	for (int subj = 0; subj < m_nSubj; subj++)
@@ -142,7 +143,6 @@ void GroupwiseRegistration::init(vector<string> sphere,vector<string> surf, std:
 	m_spharm = new spharm[m_nSubj];	// spharm info
 	m_updated = new bool[m_nSubj];	// AABB tree cache
 	m_eig = new float[m_nSubj];		// eigenvalues
-	m_work = new float[m_nSubj * 3 - 1];	// workspace for eigenvalue computation
 	m_csize = (m_degree + 1) * (m_degree + 1) * m_nSubj; // total # of coefficients
 	m_coeff = new float[m_csize * 2];	// how many coefficients are required: the sum of all possible coefficients
 	m_coeff_prev_step = new float[m_csize * 2];	// the previous coefficients
@@ -323,7 +323,6 @@ void GroupwiseRegistration::init(const char **sphere, const char **property, con
 	m_spharm = new spharm[m_nSubj];	// spharm info
 	m_updated = new bool[m_nSubj];	// AABB tree cache
 	m_eig = new float[m_nSubj];		// eigenvalues
-	m_work = new float[m_nSubj * 3 - 1];	// workspace for eigenvalue computation
 	m_csize = (m_degree + 1) * (m_degree + 1) * m_nSubj; // total # of coefficients
 	m_coeff = new float[m_csize * 2];	// how many coefficients are required: the sum of all possible coefficients
 	m_coeff_prev_step = new float[m_csize * 2];	// the previous coefficients
@@ -1167,14 +1166,10 @@ float GroupwiseRegistration::entropy(void)
 
 void GroupwiseRegistration::eigenvalues(float *M, int dim, float *eig)
 {
-	int n = dim;
-	int lwork = dim * 3 - 1;	// dimension of the work array
-	int lda = n;			// lda: leading dimension
-	int info;				// information (0 for successful exit)
-	
-	char jobz[] = "N";	// eigenvalue only
-	char uplo[] = "L"; // Lower triangle
-	ssyev_(jobz, uplo, &n, M, &lda, eig, m_work, &lwork, &info);
+  Eigen::Map<Eigen::MatrixXf> A_mat(M, dim, dim);
+  Eigen::Map<Eigen::VectorXf> eig_mat(eig, dim);
+
+  eig_mat = A_mat.selfadjointView<Eigen::Lower>().eigenvalues();
 }
 
 float GroupwiseRegistration::propertyInterpolation(float *refMap, int index, float *coeff, Mesh *mesh)

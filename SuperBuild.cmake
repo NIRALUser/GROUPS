@@ -18,7 +18,6 @@ set(proj ${SUPERBUILD_TOPLEVEL_PROJECT})
 
 # Project dependencies
 set(${proj}_DEPENDS
-   LAPACK
    MeshLib
    RigidAlignment
    SurfRemesh

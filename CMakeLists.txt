@@ -58,11 +58,6 @@ endif()
 
 #-----------------------------------------------------------------------------
 find_package(MeshLib REQUIRED)
-find_package(LAPACKE REQUIRED)
-
-# Set Fortran_<id>_RUNTIME_LIBRARIES and CMAKE_Fortran_IMPLICIT_LINK_*
-set(Fortran_COMPILER_ID "${LAPACKE_Fortran_COMPILER_ID}")
-find_package(Fortran REQUIRED)
 
 #-----------------------------------------------------------------------------
 # Extension modules
@@ -70,19 +65,7 @@ add_subdirectory(Modules)
 ## NEXT_MODULE
 
 #-----------------------------------------------------------------------------
-# Install fortran runtime libraries
-if(NOT APPLE)
-  Fortran_InstallLibrary(
-    FILES ${Fortran_${LAPACKE_Fortran_COMPILER_ID}_RUNTIME_LIBRARIES}
-    DESTINATION ${Slicer_INSTALL_THIRDPARTY_LIB_DIR} COMPONENT RuntimeLibraries
-    )
-else()
-  set(${EXTENSION_NAME}_FIXUP_BUNDLE_LIBRARY_DIRECTORIES ${Fortran_${LAPACKE_Fortran_COMPILER_ID}_RUNTIME_DIRECTORIES} CACHE STRING "List of fixup bundle library directories" FORCE)
-endif()
-
-#-----------------------------------------------------------------------------
 set(EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS)
-list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${LAPACK_DIR};LAPACK;RuntimeLibraries;/")
 list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${MeshLib_DIR};MeshLib;RuntimeLibraries;/")
 list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${RigidAlignment_DIR};RigidAlignment;RuntimeLibraries;/")
 list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${SurfRemesh_DIR};SurfRemesh;RuntimeLibraries;/")
