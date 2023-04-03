@@ -27,13 +27,13 @@ if(NOT DEFINED ${proj}_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_REPOSITORY
-    "${EP_GIT_PROTOCOL}://github.com/jcfr/SurfRemesh.git"
+    "${EP_GIT_PROTOCOL}://github.com/NIRALUser/SurfRemesh.git"
     QUIET
     )
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG
-    "40052638760de642a0da3b2d1a7ce305ad51d8b4" # slicersalt-0.0.0-2017-03-08-408e8d69a
+    "605ec90433aad518b4771c2d516f18a8f1f4414a" # master (2019-04-11)
     QUIET
     )
 
